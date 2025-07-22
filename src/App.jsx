@@ -1,12 +1,15 @@
-import Header from './components/Header'
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import NoteList from "./components/NoteList";
 
 function App() {
-
   return (
-    <>
-      <Header/>
-    </>
-  )
+    <div className="h-screen flex flex-col">
+      <Header />
+        <NoteList/>
+      {/* <Footer/> */}
+    </div>
+  );
 }
 
-export default App
+export default App;
