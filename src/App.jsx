@@ -3,11 +3,12 @@ import Header from "./components/Header";
 import NoteList from "./components/NoteList";
 
 function App() {
+  
   return (
     <div className="h-screen flex flex-col">
       <Header />
-        <NoteList/>
-      {/* <Footer/> */}
+      <NoteList/>
+      <Footer/>
     </div>
   );
 }
