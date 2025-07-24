@@ -25,8 +25,10 @@ export const createNote = async (req, res) => {
 
 // Get all notes
 export const getAllNotes = async (req, res) => {
+
   try {
     const notes = await Note.find();
+
     res.status(200).json({
       status: "success",
       message: "Notes retrieved successfully",
@@ -34,6 +36,7 @@ export const getAllNotes = async (req, res) => {
       error: null,
     });
   } catch (error) {
+
     res.status(500).json({
       status: "error",
       message: "Error retrieving notes",

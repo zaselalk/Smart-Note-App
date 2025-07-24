@@ -1,45 +1,49 @@
-import ReactList from "react-list";
 import Note from "./Note";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 function NoteList() {
 
-    const [getNoteList, setNoteList] = useState([
-        {
-            id: 1,
-            title: "Meeting Notes",
-            content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam, molestias nisi, vero harum labore laudantium quasi asperiores porro quibusdam mollitia sapiente eaque! Debitis asperiores illum at nobis, tempore et architecto!",
-            date:"2025/12/01"
-        },
-        {
-            id: 2,
-            title: "Grocery List",
-            content: "Milk, eggs, bread, bananas, chicken breast...",
-            date:"2025/12/01"
-        },
-        {
-            id: 3,
-            title: "Book Ideas",
-            content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam, molestias nisi, vero harum labore laudantium quasi asperiores porro quibusdam mollitia sapiente eaque! Debitis asperiores illum at nobis, tempore et architecto!",
-            date:"2025/12/01"
-        },
-        {
-            id: 4,
-            title: "Weekend Plans",
-            content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam, molestias nisi, vero harum labore laudantium quasi asperiores porro quibusdam mollitia sapiente eaque! Debitis asperiores illum at nobis, tempore et architecto!",
-            date:"2025/12/01"
+    const [getNoteList, setNoteList] = useState([]);
+
+    useEffect(()=>{
+        loadNotes();
+    },[])
+
+    const loadNotes = async()=>{
+        
+        const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+        if (!backendUrl) {
+            throw new Error('REACT_APP_BACKEND_URL is not defined in .env file');
         }
-    ]);
+
+        // Send GET request to fetch notes
+        const response = await fetch(`${backendUrl}/api/notes/getAll`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data)
+        setNoteList(data.Data);
+    }
+
 
     return (
-        <div className="mt-12 mb-4 px-3 overflow-scroll">
-            <ReactList
-                itemRenderer={(index) => (
-                    <Note {...getNoteList[index]} />
-                )}
-                length={getNoteList.length}
-                type="uniform"
-            />
+        <div className="mt-12 mb-4 px-3 overflow-y-scroll">
+            <div className="flex flex-wrap gap-4 sm:justify-center lg:justify-start">
+                {getNoteList.map((note) => (
+                    <div key={note._id} className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4">
+                        <Note {...note} />
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

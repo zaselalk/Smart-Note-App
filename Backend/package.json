@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "type": "module",
-   "scripts": {
+  "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "mongoose": "^8.16.4"

@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose, { mongo } from "mongoose";
 import dotenv from "dotenv";
-
+import cors from 'cors';
 
 
 
@@ -13,10 +13,7 @@ const PORT = process.env.PORT || 5000;
 
 //Database connection
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB connected successfully");
   })
@@ -27,6 +24,7 @@ mongoose
 
 // Middleware to parse JSON requests
 app.use(express.json());
+app.use(cors());
 
 // Basic route for testing
 app.get("/", (req, res) => {
