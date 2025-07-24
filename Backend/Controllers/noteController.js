@@ -4,8 +4,8 @@ import Note from "../Models/NoteModel.js";
 // Create a new note
 export const createNote = async (req, res) => {
   try {
-    const { title, description, category } = req.body;
-    const newNote = new Note({ title, description, category });
+    const { title, date, note } = req.body;
+    const newNote = new Note({ title, date, note });
     await newNote.save();
     res.status(201).json({
       status: "success",
@@ -75,11 +75,11 @@ export const getNoteById = async (req, res) => {
 // Update a note by ID
 export const updateNoteById = async (req, res) => {
   const { id } = req.params;
-  const { title, description, category } = req.body;
+  const { title, date, note } = req.body;
   try {
     const updatedNote = await Note.findByIdAndUpdate(
       id,
-      { title, description, category },
+      { title, date, note },
       { new: true }
     );
     if (!updatedNote) {
