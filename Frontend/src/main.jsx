@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import NewNote from "./screens/NewNote";
 import ViewNote from "./screens/ViewNote";
 import { NoteProvider } from "./context/NoteContext";
+import EditNote from "./screens/EditNote";
 
 createRoot(document.getElementById("root")).render(
   
@@ -14,6 +15,7 @@ createRoot(document.getElementById("root")).render(
         <Route index element={<Home />} />
         <Route path="new-note" element={<NewNote />} />
         <Route path="view-note/:noteId" element={<ViewNote />} />
+        <Route path="view-note/:noteId/edit" element={<EditNote />} />
       </Routes>
     </BrowserRouter>
   </NoteProvider>

@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useNotes } from "../context/NoteContext";
-import {format} from "date-fns"
+import { format } from "date-fns";
 
 function ViewNote() {
-
   const { noteId } = useParams();
   const { noteList, setNoteList } = useNotes();
 
@@ -16,7 +15,6 @@ function ViewNote() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-
     setLoading(true);
 
     const note = noteList.find((note) => note._id === noteId);
@@ -50,13 +48,17 @@ function ViewNote() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      setNoteList(noteList.filter(note => note.id != noteId))
+      setNoteList(noteList.filter(note => note._id !== noteId));
       
       navigate("/");
     } catch (err) {
       setError(err.message);
       setDeleting(false);
     }
+  };
+
+  const handleUpdate = () => {
+    navigate(`/view-note/${noteId}/edit`);
   };
 
   const handleBack = () => {
@@ -103,7 +105,7 @@ function ViewNote() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-
+      {/* Header with navigation and action buttons */}
       <div className="flex justify-between items-center mb-6">
         <button
           onClick={handleBack}
@@ -111,22 +113,38 @@ function ViewNote() {
         >
           ← Back
         </button>
-        <button
-          onClick={handleDelete}
-          disabled={deleting}
-          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {deleting ? "Deleting..." : "Delete Note"}
-        </button>
+
+        {/* Action buttons */}
+        <div className="flex gap-3">
+          <button
+            onClick={handleUpdate}
+            className="px-4 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-950 transition-colors cursor-pointer"
+          >
+            ✏️ Update
+          </button>
+          <button
+            onClick={handleDelete}
+            disabled={deleting}
+            className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {deleting ? "Deleting..." : "🗑️ Delete"}
+          </button>
+        </div>
       </div>
 
       {/* Note content */}
       <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100">
+        {/* Title and Date Header */}
+        <div className="flex justify-between items-start mb-6">
+          <h1 className="text-3xl font-bold text-purple-950 flex-1 mr-4">
+            {note.title}
+          </h1>
+          <span className="text-gray-400 text-sm font-bold whitespace-nowrap">
+            {format(new Date(note.date), "yyyy-MM-dd HH:mm")}
+          </span>
+        </div>
 
-        <h1 className="text-3xl font-bold text-purple-950 mb-4 flex justify-between">
-          {note.title}  <span className="text-gray-400 text-sm font-bold mb-6">{format(new Date(note.date),"yyyy-MM-dd HH:mm")}</span>
-        </h1>
-
+        {/* Note Content */}
         <div className="text-gray-700 text-base leading-relaxed whitespace-pre-wrap">
           {note.note}
         </div>

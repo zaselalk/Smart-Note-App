@@ -15,8 +15,12 @@ export const NoteProvider = ({ children }) => {
     setNoteList(data.Data);
   };
 
+  const getTextnoteFromAudio = (audioUrl) =>{
+
+  }
+
   return (
-    <NoteContext.Provider value={{ noteList, setNoteList, loadNotes}}>
+    <NoteContext.Provider value={{ noteList, setNoteList, loadNotes, getTextnoteFromAudio}}>
       {children}
     </NoteContext.Provider>
   );
