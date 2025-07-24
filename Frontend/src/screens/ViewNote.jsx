@@ -135,13 +135,13 @@ function ViewNote() {
       {/* Note content */}
       <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100">
         {/* Title and Date Header */}
-        <div className="flex justify-between items-start mb-6">
-          <h1 className="text-3xl font-bold text-purple-950 flex-1 mr-4">
+        <div className="flex flex-col md:flex-row justify-between items-start mb-6 gap-2">
+          <h1 className="text-2xl md:text-3xl font-bold text-purple-950 md:flex-1">
             {note.title}
           </h1>
-          <span className="text-gray-400 text-sm font-bold whitespace-nowrap">
+          <p className="text-gray-400 text-sm font-bold md:text-right">
             {format(new Date(note.date), "yyyy-MM-dd HH:mm")}
-          </span>
+          </p>
         </div>
 
         {/* Note Content */}
