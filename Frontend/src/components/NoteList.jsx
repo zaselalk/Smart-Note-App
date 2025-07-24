@@ -1,47 +1,25 @@
+import { Link } from "react-router";
 import Note from "./Note";
-import { useState,useEffect } from "react";
+import { useEffect } from "react";
+import { useNotes } from "../context/NoteContext";
 
 function NoteList() {
 
-    const [getNoteList, setNoteList] = useState([]);
+    const { noteList, loadNotes } = useNotes();
 
     useEffect(()=>{
         loadNotes();
-    },[])
-
-    const loadNotes = async()=>{
-        
-        const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
-        if (!backendUrl) {
-            throw new Error('REACT_APP_BACKEND_URL is not defined in .env file');
-        }
-
-        // Send GET request to fetch notes
-        const response = await fetch(`${backendUrl}/api/notes/getAll`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log(data)
-        setNoteList(data.Data);
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[noteList])
 
 
     return (
         <div className="mt-12 mb-4 px-3 overflow-y-scroll">
             <div className="flex flex-wrap gap-4 sm:justify-center lg:justify-start">
-                {getNoteList.map((note) => (
-                    <div key={note._id} className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4">
+                {noteList.map((note) => (
+                    <Link to={`view-note/${note._id}`} key={note._id} className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4">
                         <Note {...note} />
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>
