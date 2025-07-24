@@ -16,7 +16,7 @@ export const NoteProvider = ({ children }) => {
   };
 
   const getTextnoteFromAudio = (audioUrl) =>{
-
+    console.log(audioUrl)
   }
 
   return (
