@@ -6,9 +6,10 @@ import {format} from "date-fns"
 function ViewNote() {
 
   const { noteId } = useParams();
-  const { noteList } = useNotes();
+  const { noteList, setNoteList } = useNotes();
 
   const navigate = useNavigate();
+
   const [note, setNote] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -49,8 +50,9 @@ function ViewNote() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      // Navigate back to notes list after successful deletion
-      navigate("/notes"); // Adjust this path based on your routing
+      setNoteList(noteList.filter(note => note.id != noteId))
+      
+      navigate("/");
     } catch (err) {
       setError(err.message);
       setDeleting(false);
@@ -58,7 +60,7 @@ function ViewNote() {
   };
 
   const handleBack = () => {
-    navigate(-1); // Go back to previous page
+    navigate(-1); 
   };
 
   if (loading) {
@@ -101,11 +103,11 @@ function ViewNote() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      {/* Header with back button and delete button */}
+
       <div className="flex justify-between items-center mb-6">
         <button
           onClick={handleBack}
-          className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+          className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors cursor-pointer"
         >
           ← Back
         </button>

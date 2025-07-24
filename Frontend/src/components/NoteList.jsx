@@ -1,17 +1,10 @@
 import { Link } from "react-router";
 import Note from "./Note";
-import { useEffect } from "react";
 import { useNotes } from "../context/NoteContext";
 
 function NoteList() {
 
-    const { noteList, loadNotes } = useNotes();
-
-    useEffect(()=>{
-        loadNotes();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[noteList])
-
+    const { noteList } = useNotes();
 
     return (
         <div className="mt-12 mb-4 px-3 overflow-y-scroll">
