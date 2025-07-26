@@ -32,7 +32,7 @@ jobs:
           output_location: "dist" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
         env:
-          VITE_BACKEND_URL: "https://ictsc-note-app-e6cca3hqc6eef3a2.southeastasia-01.azurewebsites.net/"
+          VITE_BACKEND_URL: "https://ictsc-note-app-e6cca3hqc6eef3a2.southeastasia-01.azurewebsites.net"
     
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
